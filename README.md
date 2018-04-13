@@ -1,113 +1,113 @@
-# React Chrome Extension Boilerplate
+# Chrome Extension Webpack Boilerplate
 
-[![Build Status](https://travis-ci.org/jhen0409/react-chrome-extension-boilerplate.svg?branch=master)](https://travis-ci.org/jhen0409/react-chrome-extension-boilerplate)
-[![Build status: Windows](https://ci.appveyor.com/api/projects/status/b5xy6ev6oykth0d2/branch/master?svg=true)](https://ci.appveyor.com/project/jhen0409/react-chrome-extension-boilerplate/branch/master)
-[![NPM version](http://img.shields.io/npm/v/react-chrome-extension-boilerplate.svg?style=flat)](https://www.npmjs.com/package/react-chrome-extension-boilerplate)
-[![Dependency Status](https://david-dm.org/jhen0409/react-chrome-extension-boilerplate.svg)](https://david-dm.org/jhen0409/react-chrome-extension-boilerplate)
-[![devDependency Status](https://david-dm.org/jhen0409/react-chrome-extension-boilerplate/dev-status.svg)](https://david-dm.org/jhen0409/react-chrome-extension-boilerplate#info=devDependencies)
+A basic foundation boilerplate for rich Chrome Extensions using [Webpack](https://webpack.github.io/) to help you write modular and modern Javascript code, load CSS easily and [automatic reload the browser on code changes](https://webpack.github.io/docs/webpack-dev-server.html#automatic-refresh).
 
-> Boilerplate for Chrome Extension React.js project.
+## Developing a new extension
+_I'll assume that you already read the [Webpack docs](https://webpack.github.io/docs) and the [Chrome Extension](https://developer.chrome.com/extensions/getstarted) docs._
 
-## Features
 
- - Simple [React](https://github.com/facebook/react)/[Redux](https://github.com/rackt/redux) examples of Chrome Extension Window & Popup & Inject pages
- - Hot reloading React/Redux (Using [Webpack](https://github.com/webpack/webpack) and [React Transform](https://github.com/gaearon/react-transform))
- - Write code with ES2015+ syntax (Using [Babel](https://github.com/babel/babel))
- - E2E tests of Window & Popup & Inject pages (Using [Chrome Driver](https://www.npmjs.com/package/chromedriver), [Selenium Webdriver](https://www.npmjs.com/package/selenium-webdriver))
+1. Check if your Node.js version is >= 6.
+2. Clone the repository.
+3. Install [yarn](https://yarnpkg.com/lang/en/docs/install/).
+4. Run `yarn`.
+5. Change the package's name and description on `package.json`.
+6. Change the name of your extension on `src/manifest.json`.
+7. Run `npm run start`
+8. Load your extension on Chrome following:
+    1. Access `chrome://extensions/`
+    2. Check `Developer mode`
+    3. Click on `Load unpacked extension`
+    4. Select the `build` folder.
+8. Have fun.
 
-## Examples
+## Structure
+All your extension's development code must be placed in `src` folder, including the extension manifest.
 
-The example is edited from [Redux](https://github.com/rackt/redux) TodoMVC example.
+The boilerplate is already prepared to have a popup, a options page and a background page. You can easily customize this.
 
-#### Popup
+Each page has its own [assets package defined](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/blob/master/webpack.config.js#L16-L20). So, to code on popup you must start your code on `src/js/popup.js`, for example.
 
-![Popup](https://cloud.githubusercontent.com/assets/3001525/14128490/dc05e9f8-f653-11e5-9de6-82d1de01844a.gif)
+You must use the [ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) to a better code organization. The boilerplate is already prepared to that and [here you have a little example](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/blob/master/src/js/popup.js#L2-L4).
 
-The `todos` state will be saved to `chrome.storage.local`.
+## Webpack auto-reload and HRM
+To make your workflow much more efficient this boilerplate uses the [webpack server](https://webpack.github.io/docs/webpack-dev-server.html) to development (started with `npm run server`) with auto reload feature that reloads the browser automatically every time that you save some file o your editor.
 
-#### Window
+You can run the dev mode on other port if you want. Just specify the env var `port` like this:
 
-![Window](https://cloud.githubusercontent.com/assets/3001525/14128489/da176b62-f653-11e5-9bff-fefc35232358.gif)
-
-The context menu is created by [chrome/extension/background/contextMenus.js](chrome/extension/background/contextMenus.js).
-
-#### Inject page
-
-The inject script is being run by [chrome/extension/background/inject.js](chrome/extension/background/inject.js). A simple example will be inject bottom of page(`https://github.com/*`) if you visit.
-
-If you are receiving the error message `Failed to load resource: net::ERR_INSECURE_RESPONSE`, you need to allow invalid certificates for resources loaded from localhost. You can do this by visiting the following URL: `chrome://flags/#allow-insecure-localhost` and enabling **Allow invalid certificates for resources loaded from localhost**.
-
-## Installation
-
-```bash
-# clone it
-$ git clone https://github.com/jhen0409/react-chrome-extension-boilerplate.git
-
-# Install dependencies
-$ npm install
+```
+$ PORT=6002 npm run start
 ```
 
-## Development
+## Content Scripts
 
-* Run script
-```bash
-# build files to './dev'
-# start webpack development server
-$ npm run dev
-```
-* If you're developing Inject page, please allow `https://localhost:3000` connections. (Because `injectpage` injected GitHub (https) pages, so webpack server procotol must be https.)
-* [Load unpacked extensions](https://developer.chrome.com/extensions/getstarted#unpacked) with `./dev` folder.
+Although this boilerplate uses the webpack dev server, it's also prepared to write all your bundles files on the disk at every code change, so you can point, on your extension manifest, to your bundles that you want to use as [content scripts](https://developer.chrome.com/extensions/content_scripts), but you need to exclude these entry points from hot reloading [(why?)](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/issues/4#issuecomment-261788690). To do so you need to expose which entry points are content scripts on the `webpack.config.js` using the `chromeExtensionBoilerplate -> notHotReload` config. Look the example below.
 
-#### React/Redux hot reload
+Let's say that you want use the `myContentScript` entry point as content script, so on your `webpack.config.js` you will configure the entry point and exclude it from hot reloading, like this:
 
-This boilerplate uses `Webpack` and `react-transform`, and use `Redux`. You can hot reload by editing related files of Popup & Window & Inject page.
-
-#### Using Redux DevTools Extension
-
-You can use [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension) on development mode.
-
-## Build
-
-```bash
-# build files to './build'
-$ npm run build
+```js
+{
+  …
+  entry: {
+    myContentScript: "./src/js/myContentScript.js"
+  },
+  chromeExtensionBoilerplate: {
+    notHotReload: ["myContentScript"]
+  }
+  …
+}
 ```
 
-## Compress
+and on your `src/manifest.json`:
 
-```bash
-# compress build folder to {manifest.name}.zip and crx
-$ npm run build
-$ npm run compress -- [options]
+```json
+{
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/*"],
+      "js": ["myContentScript.bundle.js"]
+    }
+  ]
+}
+
 ```
 
-#### Options
+## Packing
+After the development of your extension run the command
 
-If you want to build `crx` file (auto update), please provide options, and add `update.xml` file url in [manifest.json](https://developer.chrome.com/extensions/autoupdate#update_url manifest.json).
+```
+$ NODE_ENV=production npm run build
+```
+Now, the content of `build` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
 
-* --app-id: your extension id (can be get it when you first release extension)
-* --key: your private key path (default: './key.pem')  
-  you can use `npm run compress-keygen` to generate private key `./key.pem`
-* --codebase: your `crx` file url
+## Secrets
+If you are developing an extension that talks with some API you probably are using different keys for testing and production. Is a good practice you not commit your secret keys and expose to anyone that have access to the repository.
 
-See [autoupdate guide](https://developer.chrome.com/extensions/autoupdate) for more information.
+To this task this boilerplate import the file `./secrets.<THE-NODE_ENV>.js` on your modules through the module named as `secrets`, so you can do things like this:
 
-## Test
+_./secrets.development.js_
 
-* `test/app`: React components, Redux actions & reducers tests
-* `test/e2e`: E2E tests (use [chromedriver](https://www.npmjs.com/package/chromedriver), [selenium-webdriver](https://www.npmjs.com/package/selenium-webdriver))
-
-```bash
-# lint
-$ npm run lint
-# test/app
-$ npm test
-$ npm test -- --watch  # watch files
-# test/e2e
-$ npm run build
-$ npm run test-e2e
+```js
+export default { key: "123" };
 ```
 
-## LICENSE
+_./src/popup.js_
 
-[MIT](LICENSE)
+```js
+import secrets from "secrets";
+ApiCall({ key: secrets.key });
+```
+:point_right: The files with name `secrets.*.js` already are ignored on the repository.
+
+## With React.js
+:bulb: If you want use [React.js](https://facebook.github.io/react/) with this boilerplate, check the **[react branch](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/tree/react)**.
+
+
+## Contributing
+
+1. **Please!! Do not create a pull request without an issue before discussing the problem.**
+2. On your PR make sure that you are following the current codebase style.
+3. Your PR must be single purpose. Resolve just one problem on your PR.
+4. Make sure to commit in the same style that we are committing until now on the project.
+
+-------------
+Samuel Simões ~ [@samuelsimoes](https://twitter.com/samuelsimoes) ~ [Blog](http://blog.samuelsimoes.com/)
