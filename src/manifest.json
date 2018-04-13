@@ -20,8 +20,7 @@
         "js": [
             "libraries/jquery.js",
             "libraries/tether.min.js",
-            "libraries/bootstrap.min.js",
-            "content.bundle.js"
+            "libraries/bootstrap.min.js"
         ],
         "all_frames": false,
         "run_at": "document_end",

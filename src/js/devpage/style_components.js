@@ -25,15 +25,6 @@ export const PageAndSelector = styled.div`
     display: flex;
     flex-direction: column;
 `
-// Hacer que form styled herede de wrapper las props en comun, cambiarles nombres, meter en form a ListExampleMessages
-
-/*export const PublishFormStyled = styled.div`
-    width: 20%;
-    position: absolute !important;
-    top: 0px !important;
-    right: 0px !important
-    
-`*/
 
 export const PublishFormStyled = styled.div`
     display: flex;

@@ -22,14 +22,8 @@ var options = {
   entry: {
     popup: path.join(__dirname, "src", "js", "popup.js"),
     background: path.join(__dirname, "src", "js", "background.js"),
-    devtools: path.join(__dirname, "src", "js", "devtools.js"),
-    dictionary: path.join(__dirname, "src", "js", "dictionary.js"),
-    action: path.join(__dirname, "src", "js", "action.js"),
-    node: path.join(__dirname, "src", "js", "node.js"),
-    track: path.join(__dirname, "src", "js", "track.js"),
-    page: path.join(__dirname, "src", "js", "page.js"),
-    devpage: path.join(__dirname, "src", "js", "devpage.js"),
-    content: path.join(__dirname, "src", "js", "content.big.js")
+    devtools: path.join(__dirname, "src", "js", "devtools.js"),    
+    devpage: path.join(__dirname, "src", "js", "devpage.js"),    
     //jquery: path.join(__dirname, "src", "js", "jquery.js"),
     //tether: path.join(__dirname, "src", "js", "tether.min.js"),
     //bootstrap: path.join(__dirname, "src", "js", "bootstrap.min.js")

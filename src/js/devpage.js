@@ -4,10 +4,6 @@ import GATracker from "./devpage/GATracker_component.jsx";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from "react";
 import { render } from "react-dom";
-import {Dictionary} from './dictionary.js'
-import {Track} from './track.js'
-import {Action} from './action.js'
-import {Node} from './node.js'
 
 console.log('on dev page.js')
 // Create a connection to the background page
