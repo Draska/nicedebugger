@@ -1,16 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MyAwesomeReactComponent from './popup/comp1';
+import "../css/popup.css";
+import Greeting from "./popup/greeting_component.jsx";
+import React from "react";
+import { render } from "react-dom";
+chrome.tabs.create({url: chrome.extension.getURL('background.html')});
 
-
-const App = () => (
-  <MuiThemeProvider>
-    <MyAwesomeReactComponent />
-  </MuiThemeProvider>
-);
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
+render(
+  <Greeting/>,
+  window.document.getElementById("app-container")
 );

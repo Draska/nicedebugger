@@ -4,6 +4,8 @@ var WebpackDevServer = require("webpack-dev-server"),
     env = require("./env"),
     path = require("path");
 
+require("./prepare");
+
 var options = (config.chromeExtensionBoilerplate || {});
 var excludeEntriesToHotReload = (options.notHotReload || []);
 
@@ -31,4 +33,4 @@ var server =
     headers: { "Access-Control-Allow-Origin": "*" }
   });
 
-server.listen(env.PORT);
+server.listen(3001);//env.PORT

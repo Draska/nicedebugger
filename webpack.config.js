@@ -21,13 +21,21 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   entry: {
     popup: path.join(__dirname, "src", "js", "popup.js"),
-    options: path.join(__dirname, "src", "js", "options.js"),
     background: path.join(__dirname, "src", "js", "background.js"),
-    //devtools: path.join(__dirname, "src", "js", "devtools.js"),
-    //devpage: path.join(__dirname, "src", "js", "devpage.js")
+    devtools: path.join(__dirname, "src", "js", "devtools.js"),
+    dictionary: path.join(__dirname, "src", "js", "dictionary.js"),
+    action: path.join(__dirname, "src", "js", "action.js"),
+    node: path.join(__dirname, "src", "js", "node.js"),
+    track: path.join(__dirname, "src", "js", "track.js"),
+    page: path.join(__dirname, "src", "js", "page.js"),
+    devpage: path.join(__dirname, "src", "js", "devpage.js"),
+    content: path.join(__dirname, "src", "js", "content.big.js")
+    //jquery: path.join(__dirname, "src", "js", "jquery.js"),
+    //tether: path.join(__dirname, "src", "js", "tether.min.js"),
+    //bootstrap: path.join(__dirname, "src", "js", "bootstrap.min.js")
   },
   chromeExtensionBoilerplate: {
-    //notHotReload: ["content.big.js", "jquery-3.1.1.min"]
+    notHotReload: ["content.big.js", "jquery-3.1.1.min"]
   },  
   output: {
     path: path.join(__dirname, "build"),
@@ -71,8 +79,7 @@ var options = {
         // Copy directory contents to {output}/to/directory/
         { from: 'src/css', to: 'css' },
         { from: 'src/img', to: 'img' },
-        //{ from: 'src/js/libraries', to: 'libraries' },   
-        { from: 'src/js', to: 'js' },
+        { from: 'src/js/libraries', to: 'libraries' },   
       ], {
           ignore: [],
           copyUnmodified: true
@@ -96,7 +103,7 @@ var options = {
       filename: "background.html",
       chunks: ["background"]
     }),
-    /* new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "devtools.html"),
       filename: "devtools.html",
       chunks: ["devtools"]
@@ -105,7 +112,7 @@ var options = {
       template: path.join(__dirname, "src", "devpage.html"),
       filename: "devpage.html",
       chunks: ["devpage"]
-    }), */
+    }),
     new WriteFilePlugin()
   ]
 };
